@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PostCard from '../components/PostCard.astro';
-import FilterControl from '../components/FilterControl.astro';
+import FilterHub from '../components/FilterHub';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
@@ -19,33 +18,10 @@ const allYears = [...new Set(posts.map(post => post.data.pubDate.getFullYear()))
         </h1>
     </div>
 
-    <!-- Controls -->
-    <FilterControl tags={allTags} years={allYears} />
-
-    <!-- Feed -->
-    <section id="feed" class="space-y-6 min-h-[50vh]">
-        {posts.map((post) => (
-            <div 
-                class="post-card-container transition-all duration-300 ease-in-out"
-                data-year={post.data.pubDate.getFullYear()}
-                data-month={post.data.pubDate.getMonth()}
-                data-tags={post.data.tags.join(',')}
-            >
-                <PostCard
-                    title={post.data.title}
-                    description={post.data.description}
-                    pubDate={post.data.pubDate}
-                    tags={post.data.tags}
-                    classification={post.data.classification || 'UNCLASSIFIED'}
-                    url={`/blog/${post.slug}/`}
-                />
-            </div>
-        ))}
-        
-        {posts.length === 0 && (
-            <div class="text-center py-20 border border-dashed border-hud-border text-hud-muted">
-                NO_LOGS_FOUND_IN_ARCHIVE
-            </div>
-        )}
-    </section>
+    <!-- Controls & Feed -->
+    <FilterHub client:load posts={posts.map(p => ({
+        ...p.data,
+        slug: p.slug,
+        classification: p.data.classification || 'UNCLASSIFIED'
+    }))} />
 </Layout>
