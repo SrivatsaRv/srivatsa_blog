@@ -1,0 +1,53 @@
+---
+import { format } from 'date-fns';
+
+interface Props {
+	title: string;
+	description?: string;
+	pubDate: Date;
+	tags: string[];
+    classification: string;
+	url: string;
+}
+
+const { title, description, pubDate, tags, classification, url } = Astro.props;
+---
+
+<article class="post-card group relative border-l-2 border-hud-border pl-6 py-4 transition-all hover:border-hud-accent">
+    <!-- Date/Class Metadata -->
+    <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest text-hud-muted mb-2">
+        <time datetime={pubDate.toISOString()}>
+            {format(pubDate, 'yyyy-MM-dd')}
+        </time>
+        <span class="text-hud-border">|</span>
+        <span class={`uppercase ${classification === 'RESTRICTED' ? 'text-hud-warning' : 'text-hud-accent'}`}>
+            {classification}
+        </span>
+    </div>
+
+    <!-- Title -->
+    <h2 class="text-xl md:text-2xl font-medium text-hud-text group-hover:text-white transition-colors uppercase tracking-tight mb-2">
+        <a href={url} class="outline-none focus:underline decoration-hud-accent underline-offset-4">
+            {title}
+        </a>
+    </h2>
+
+    <!-- Description -->
+    {description && (
+        <p class="text-hud-muted text-sm leading-relaxed max-w-2xl mb-4">
+            {description}
+        </p>
+    )}
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2">
+        {tags.map(tag => (
+            <span class="px-1.5 py-0.5 border border-hud-border text-[9px] font-mono uppercase text-hud-muted group-hover:border-hud-muted transition-colors">
+                #{tag}
+            </span>
+        ))}
+    </div>
+
+    <!-- Hover Indicator -->
+    <div class="absolute -left-[3px] top-0 h-0 w-[4px] bg-hud-accent transition-all duration-300 group-hover:h-full"></div>
+</article>

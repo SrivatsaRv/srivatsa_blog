@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+
+import Analytics from '../components/Analytics.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="bg-hud-black scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description || "Operational Log"} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | Srivatsa RV</title>
+        <Analytics />
+	</head>
+	<body class="min-h-screen text-hud-text font-sans antialiased selection:bg-hud-accent selection:text-hud-black relative overflow-x-hidden">
+		
+        <!-- Background Grid Effect -->
+        <div class="fixed inset-0 z-0 pointer-events-none opacity-10" 
+             style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 40px 40px;">
+        </div>
+
+        <!-- System Status Header -->
+        <header class="fixed top-0 left-0 w-full z-50 border-b border-hud-border bg-hud-black/90 backdrop-blur-md h-12 flex items-center justify-between px-4 font-mono text-xs tracking-widest text-hud-muted uppercase">
+            <div class="flex items-center gap-4">
+                <span class="text-hud-accent">>> SYSTEM_ONLINE</span>
+                <span class="hidden sm:inline">User: Srivatsa RV</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>{new Date().toISOString().split('T')[0]}</span>
+                <span class="text-hud-warning">SECURE_ON</span>
+            </div>
+        </header>
+
+        <!-- Main Content "Viewport" -->
+		<main class="relative z-10 pt-20 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto min-h-screen border-l border-r border-hud-border/30 bg-hud-black/50 backdrop-blur-sm shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+			<slot />
+		</main>
+
+        <!-- Footer / Diagnostics -->
+        <footer class="fixed bottom-0 left-0 w-full z-40 border-t border-hud-border bg-hud-black h-8 flex items-center justify-center font-mono text-[10px] text-hud-muted tracking-widest uppercase">
+            <span>TERMINAL_ID: 15fd9990 // RENDER_MODE: STATIC</span>
+        </footer>
+
+	</body>
+</html>

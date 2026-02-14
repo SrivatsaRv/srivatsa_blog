@@ -1,0 +1,79 @@
+---
+import { Copy, Share2 } from 'lucide-react';
+
+interface Props {
+	title: string;
+	url: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<div class="share-control flex items-center gap-2 text-hud-muted mt-8 pt-4 border-t border-hud-border/30">
+	<span class="text-[10px] uppercase tracking-widest mr-2">Create Uplink:</span>
+	
+	<button 
+		data-url={url} 
+		data-title={title}
+		class="copy-link-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-black hover:bg-hud-gray transition-colors text-xs font-mono"
+	>
+		<Copy size={12} />
+		<span class="group-hover:text-hud-accent">COPY_SECURE_LINK</span>
+	</button>
+
+	<button 
+		data-url={url} 
+		data-title={title}
+		class="share-x-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-black hover:bg-hud-gray transition-colors text-xs font-mono"
+	>
+		<Share2 size={12} />
+		<span class="group-hover:text-hud-warning">TRANSMIT_X</span>
+	</button>
+</div>
+
+<script>
+	function getUTMLink(baseUrl: string, source: string) {
+		const url = new URL(baseUrl);
+		url.searchParams.set('utm_source', source);
+		url.searchParams.set('utm_medium', 'uplink_module');
+		return url.toString();
+	}
+
+	// Copy Link Logic
+	document.querySelectorAll('.copy-link-btn').forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const baseUrl = (btn as HTMLElement).dataset.url!;
+			const fullUrl = getUTMLink(baseUrl, 'clipboard');
+			
+			try {
+				await navigator.clipboard.writeText(fullUrl);
+				const span = btn.querySelector('span')!;
+				const originalText = span.innerText;
+				span.innerText = "LINK_SECURED";
+				span.classList.add('text-hud-success');
+				
+				setTimeout(() => {
+					span.innerText = originalText;
+					span.classList.remove('text-hud-success');
+				}, 2000);
+			} catch (err) {
+				console.error('Uplink failed', err);
+			}
+		});
+	});
+
+	// X (Twitter) Logic
+	document.querySelectorAll('.share-x-btn').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const baseUrl = (btn as HTMLElement).dataset.url!;
+			const title = (btn as HTMLElement).dataset.title!;
+			const fullUrl = getUTMLink(baseUrl, 'x_platform');
+			const text = `// OPERATIONAL LOG: ${title}\n\n`;
+			
+			window.open(
+				`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(fullUrl)}`, 
+				'_blank'
+			);
+		});
+	});
+</script>
