@@ -17,7 +17,7 @@ const { title, description, pubDate, tags, classification, url } = Astro.props;
     <!-- Date/Class Metadata -->
     <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest text-hud-muted mb-2">
         <time datetime={pubDate.toISOString()}>
-            {format(pubDate, 'yyyy-MM-dd')}
+            {format(pubDate, 'MMM d, yyyy')}
         </time>
         <span class="text-hud-border">|</span>
         <span class={`uppercase ${classification === 'RESTRICTED' ? 'text-hud-warning' : 'text-hud-accent'}`}>
@@ -26,7 +26,7 @@ const { title, description, pubDate, tags, classification, url } = Astro.props;
     </div>
 
     <!-- Title -->
-    <h2 class="text-xl md:text-2xl font-medium text-hud-text group-hover:text-white transition-colors uppercase tracking-tight mb-2">
+    <h2 class="text-xl md:text-2xl font-medium text-hud-text group-hover:text-hud-accent transition-colors uppercase tracking-tight mb-2">
         <a href={url} class="outline-none focus:underline decoration-hud-accent underline-offset-4">
             {title}
         </a>

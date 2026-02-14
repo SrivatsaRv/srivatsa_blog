@@ -9,25 +9,24 @@ interface Props {
 const { title, url } = Astro.props;
 ---
 
-<div class="share-control flex items-center gap-2 text-hud-muted mt-8 pt-4 border-t border-hud-border/30">
-	<span class="text-[10px] uppercase tracking-widest mr-2">Create Uplink:</span>
+<div class="share-control flex items-center justify-end gap-2 text-hud-muted mt-8 pt-4 border-t border-hud-border/30">
 	
 	<button 
 		data-url={url} 
 		data-title={title}
-		class="copy-link-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-black hover:bg-hud-gray transition-colors text-xs font-mono"
+		class="copy-link-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-dark hover:bg-hud-gray transition-colors text-xs font-medium rounded-sm"
 	>
 		<Copy size={12} />
-		<span class="group-hover:text-hud-accent">COPY_SECURE_LINK</span>
+		<span class="group-hover:text-hud-accent">Copy Link</span>
 	</button>
 
 	<button 
 		data-url={url} 
 		data-title={title}
-		class="share-x-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-black hover:bg-hud-gray transition-colors text-xs font-mono"
+		class="share-x-btn group flex items-center gap-2 px-3 py-1.5 border border-hud-border bg-hud-dark hover:bg-hud-gray transition-colors text-xs font-medium rounded-sm"
 	>
 		<Share2 size={12} />
-		<span class="group-hover:text-hud-warning">TRANSMIT_X</span>
+		<span class="group-hover:text-hud-text">Share Post</span>
 	</button>
 </div>
 

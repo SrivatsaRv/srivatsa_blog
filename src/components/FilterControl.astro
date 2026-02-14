@@ -1,0 +1,150 @@
+---
+interface Props {
+  tags: string[];
+  years: number[];
+}
+
+const { tags, years } = Astro.props;
+---
+
+<div class="mb-12 space-y-6">
+    <!-- Search / Filter HUD -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-hud-border pb-6">
+        <h2 class="text-sm font-mono text-hud-muted uppercase tracking-widest hidden md:block">
+            // TERMINAL_FILTERS
+        </h2>
+        
+        <div class="flex items-center gap-4 w-full md:w-auto">
+            <!-- Time Filter (Year / Month) -->
+            <div class="relative w-full md:w-auto">
+                <select id="time-filter" class="w-full md:w-64 bg-hud-black border border-hud-border text-hud-text text-sm rounded-sm px-3 py-1.5 focus:outline-none focus:border-hud-accent transition-colors font-mono cursor-pointer appearance-none">
+                    <option value="all">ALL YEARS</option>
+                    <!-- Options populated by JS -->
+                </select>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-hud-muted">
+                    ▼
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tag Cloud -->
+    <div class="flex flex-wrap gap-2" id="tag-cloud">
+        <button 
+            data-tag="all"
+            class="filter-tag px-3 py-1.5 bg-hud-accent text-white text-xs font-medium uppercase tracking-wider rounded-sm border border-transparent transition-all shadow-sm hover:text-white"
+        >
+            All Systems
+        </button>
+        {tags.map(tag => (
+            <button 
+                data-tag={tag}
+                class="filter-tag px-3 py-1.5 bg-hud-dark border border-hud-border text-hud-muted hover:text-hud-text hover:border-hud-text text-xs font-medium uppercase tracking-wider rounded-sm transition-all"
+            >
+                {tag}
+            </button>
+        ))}
+    </div>
+</div>
+
+<script>
+    function initFilters() {
+        const timeSelect = document.getElementById('time-filter') as HTMLSelectElement;
+        const tagButtons = document.querySelectorAll('.filter-tag');
+        const posts = document.querySelectorAll('.post-card-container');
+        
+        // Build Time Options dynamically
+        const timeMap = new Map<number, Set<number>>(); // Year -> Set of Months
+        posts.forEach(post => {
+            const y = parseInt(post.getAttribute('data-year') || '0');
+            const m = parseInt(post.getAttribute('data-month') || '0');
+            if (y > 0) {
+                if (!timeMap.has(y)) timeMap.set(y, new Set());
+                timeMap.get(y)?.add(m);
+            }
+        });
+
+        // Clear existing, keep "ALL YEARS"
+        if (timeSelect) {
+            timeSelect.innerHTML = '<option value="all">ALL YEARS</option>';
+            
+            // Sort years descending
+            const sortedYears = Array.from(timeMap.keys()).sort((a, b) => b - a);
+            
+            sortedYears.forEach(year => {
+                // Year Option
+                const yearOpt = document.createElement('option');
+                yearOpt.value = `year-${year}`;
+                yearOpt.textContent = `[ ${year} ]`;
+                yearOpt.className = "font-bold text-hud-accent";
+                timeSelect.appendChild(yearOpt);
+
+                // Months for this year (Descending)
+                const months = Array.from(timeMap.get(year) || []).sort((a, b) => b - a);
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                
+                months.forEach(m => {
+                    const monthOpt = document.createElement('option');
+                    monthOpt.value = `month-${year}-${m}`;
+                    monthOpt.textContent = `  └ ${monthNames[m]}`; // Visual hierarchy
+                    timeSelect.appendChild(monthOpt);
+                });
+            });
+        }
+
+        let currentTimeFilter = 'all';
+        let currentTag = 'all';
+
+        function filterPosts() {
+            posts.forEach(post => {
+                const postYear = post.getAttribute('data-year');
+                const postMonth = post.getAttribute('data-month');
+                const postTags = post.getAttribute('data-tags')?.split(',') || [];
+                const el = post as HTMLElement;
+
+                const tagMatch = currentTag === 'all' || postTags.includes(currentTag);
+                
+                let timeMatch = true;
+                if (currentTimeFilter !== 'all') {
+                    const [type, y, m] = currentTimeFilter.split('-');
+                    if (type === 'year') {
+                        timeMatch = postYear === y;
+                    } else if (type === 'month') {
+                        timeMatch = postYear === y && postMonth === m;
+                    }
+                }
+
+                if (tagMatch && timeMatch) {
+                    el.style.display = 'block';
+                    el.classList.add('animate-in', 'fade-in', 'slide-in-from-bottom-2');
+                } else {
+                    el.style.display = 'none';
+                    el.classList.remove('animate-in', 'fade-in', 'slide-in-from-bottom-2');
+                }
+            });
+        }
+
+        timeSelect?.addEventListener('change', (e) => {
+            currentTimeFilter = (e.target as HTMLSelectElement).value;
+            filterPosts();
+        });
+
+        tagButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tagButtons.forEach(b => {
+                    b.classList.remove('bg-hud-accent', 'text-white', 'border-transparent', 'hover:text-white');
+                    b.classList.add('bg-hud-dark', 'border-hud-border', 'text-hud-muted', 'hover:text-hud-text', 'hover:border-hud-text');
+                });
+                
+                btn.classList.remove('bg-hud-dark', 'border-hud-border', 'text-hud-muted', 'hover:text-hud-text', 'hover:border-hud-text');
+                btn.classList.add('bg-hud-accent', 'text-white', 'border-transparent', 'hover:text-white');
+
+                currentTag = btn.getAttribute('data-tag') || 'all';
+                filterPosts();
+            });
+        });
+    }
+
+    initFilters();
+    document.addEventListener('astro:page-load', initFilters);
+</script>

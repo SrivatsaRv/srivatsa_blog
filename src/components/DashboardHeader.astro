@@ -1,0 +1,86 @@
+---
+
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const allTags = new Set(posts.flatMap(post => post.data.tags));
+
+const stats = {
+  logs: posts.length,
+  systems: allTags.size,
+  uptime: Math.floor((new Date().getTime() - new Date('2025-01-01').getTime()) / (1000 * 60 * 60 * 24))
+};
+---
+
+<header class="fixed top-0 left-0 w-full z-50 border-b border-hud-border bg-hud-black/90 backdrop-blur-md h-16">
+    <div class="max-w-7xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
+        
+        <!-- Identity -->
+        <div class="flex items-center gap-4">
+            <a href="/" class="font-bold text-lg tracking-tight text-hud-text hover:text-hud-accent transition-colors font-mono">
+                srivatsa.rv
+            </a>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden text-hud-text hover:text-hud-accent transition-colors p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+
+        <!-- Navigation (Desktop) -->
+        <nav class="hidden md:flex items-center gap-8 font-medium font-mono text-sm text-hud-muted">
+            <a href="/blog" class="hover:text-hud-text transition-colors">Blogs</a>
+            <a href="/hobbies" class="hover:text-hud-text transition-colors">Hobbies</a>
+        </nav>
+
+        <!-- Metrics & Controls (Desktop Only) -->
+        <div class="hidden lg:flex items-center gap-6">
+            <div class="flex items-center gap-6 text-[10px] font-sans font-medium uppercase tracking-wider text-hud-muted border-r border-hud-border pr-6">
+                <div class="flex flex-col items-end">
+                    <span class="text-hud-text text-xs leading-none mb-0.5">{stats.logs}</span>
+                    <span>Posts</span>
+                </div>
+                <div class="flex flex-col items-end">
+                    <span class="text-hud-text text-xs leading-none mb-0.5">{stats.systems}</span>
+                    <span>Systems</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mobile Navigation Overlay (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-x-0 top-16 bottom-0 z-[100] bg-hud-dark border-t border-hud-border hidden flex-col p-4 animate-in slide-in-from-top-4 duration-200 overflow-y-auto h-[calc(100dvh-4rem)]">
+        <nav class="flex flex-col gap-4 mt-8">
+            <a href="/blog" class="flex items-center justify-between p-4 border border-radio bg-hud-black/50 hover:bg-hud-gray hover:border-hud-accent transition-all group">
+                <span class="font-mono text-lg font-bold text-hud-text group-hover:text-hud-accent uppercase tracking-widest">Access Logs</span>
+                <span class="text-hud-muted group-hover:text-hud-accent font-mono">→</span>
+            </a>
+            <a href="/hobbies" class="flex items-center justify-between p-4 border border-radio bg-hud-black/50 hover:bg-hud-gray hover:border-hud-accent transition-all group">
+                <span class="font-mono text-lg font-bold text-hud-text group-hover:text-hud-accent uppercase tracking-widest">View Profile</span>
+                <span class="text-hud-muted group-hover:text-hud-accent font-mono">→</span>
+            </a>
+        </nav>
+
+        <div class="mt-auto mb-8 grid grid-cols-2 gap-4 border-t border-hud-border pt-6">
+             <div class="text-center">
+                 <span class="block text-2xl font-black font-mono text-hud-text">{stats.logs}</span>
+                 <span class="text-[10px] font-mono text-hud-muted uppercase tracking-widest">Logs Archived</span>
+             </div>
+             <div class="text-center">
+                 <span class="block text-2xl font-black font-mono text-hud-text">{stats.systems}</span>
+                 <span class="text-[10px] font-mono text-hud-muted uppercase tracking-widest">Systems Active</span>
+             </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+
+    toggle?.addEventListener('click', () => {
+        menu?.classList.toggle('hidden');
+        menu?.classList.toggle('flex');
+    });
+</script>

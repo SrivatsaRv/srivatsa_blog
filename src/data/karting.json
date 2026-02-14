@@ -1,0 +1,65 @@
+[
+    {
+        "date": "2024-01-15",
+        "track": "Pune Kartdome",
+        "bestLap": 62.5,
+        "laps": 12,
+        "conditions": "Cold track"
+    },
+    {
+        "date": "2024-02-20",
+        "track": "Pune Kartdome",
+        "bestLap": 61.8,
+        "laps": 15,
+        "conditions": "New tires"
+    },
+    {
+        "date": "2024-03-10",
+        "track": "Pune Kartdome",
+        "bestLap": 61.2,
+        "laps": 18,
+        "conditions": "Personal Best"
+    },
+    {
+        "date": "2024-04-05",
+        "track": "Pune Kartdome",
+        "bestLap": 60.9,
+        "laps": 20,
+        "conditions": "Consistent pace"
+    },
+    {
+        "date": "2024-05-12",
+        "track": "Pune Kartdome",
+        "bestLap": 60.5,
+        "laps": 22,
+        "conditions": "Perfect conditions"
+    },
+    {
+        "date": "2024-06-25",
+        "track": "Pune Kartdome",
+        "bestLap": 59.8,
+        "laps": 25,
+        "conditions": "Sub-60 barrier broken"
+    },
+    {
+        "date": "2024-08-14",
+        "track": "Pune Kartdome",
+        "bestLap": 59.2,
+        "laps": 18,
+        "conditions": "Aggressive setup"
+    },
+    {
+        "date": "2024-10-02",
+        "track": "Pune Kartdome",
+        "bestLap": 58.9,
+        "laps": 30,
+        "conditions": "Optimal line found"
+    },
+    {
+        "date": "2024-12-15",
+        "track": "Pune Kartdome",
+        "bestLap": 58.4,
+        "laps": 25,
+        "conditions": "Current Track Record"
+    }
+]

@@ -1,50 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PostCard from '../components/PostCard.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+import Hero from '../components/Hero';
 ---
 
-<Layout title="Operational Log" description="Engineering Manifestos and System Logs.">
-    <!-- Mission Statement / Header Area -->
-    <div class="mb-16 pt-8 border-b border-hud-border pb-8">
-        <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-4">
-            Srivatsa RV<span class="text-hud-accent">.</span>LOG
-        </h1>
-        <p class="text-hud-muted max-w-2xl text-lg font-light">
-            Operational mandates, architectural decisions, and infrastructure logs. 
-            <span class="text-hud-warning block mt-2 text-xs font-mono uppercase tracking-widest">>>> SYSTEM_READY // MONITORING_ACTIVE</span>
-        </p>
-    </div>
-
-    <!-- The Feed -->
-    <section class="space-y-0">
-        <div class="flex items-center justify-between mb-4 px-2">
-            <span class="text-[10px] font-mono uppercase tracking-widest text-hud-muted">/// INCOMING_TRANSMISSIONS ({posts.length})</span>
-            <div class="h-[1px] flex-1 bg-hud-border ml-4"></div>
-        </div>
-        
-        <div class="grid gap-8">
-            {posts.map((post) => (
-                <PostCard
-                    title={post.data.title}
-                    description={post.data.description}
-                    pubDate={post.data.pubDate}
-                    tags={post.data.tags}
-                    classification={post.data.classification || 'UNCLASSIFIED'}
-                    url={`/blog/${post.slug}/`}
-                />
-            ))}
-        </div>
-        
-        <!-- Endless Indicator -->
-        <div class="mt-16 py-8 border-t border-dashed border-hud-border text-center">
-            <span class="animate-pulse text-xs font-mono text-hud-muted uppercase tracking-widest">
-                /// AWAITING_FURTHER_DATA ///
-            </span>
-        </div>
-    </section>
+<Layout title="Srivatsa RV // Operational Log" transparent={true}>
+    <!-- Kinetic Hero -->
+    <Hero client:load />
 </Layout>

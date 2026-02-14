@@ -21,77 +21,33 @@ const shareUrl = new URL(Astro.url.pathname, Astro.site).toString();
     <article class="max-w-prose mx-auto py-8">
         <!-- Metadata Header -->
         <header class="mb-12 border-b border-hud-border pb-8">
-            <div class="flex items-center gap-4 text-xs font-mono text-hud-muted mb-4">
-                <span class="text-hud-accent">>>> LOG_ENTRY</span>
-                <span>{format(entry.data.pubDate, 'yyyy-MM-dd HH:mm:ss')}</span>
-                <span class="text-hud-warning">AUTH: {entry.data.author}</span>
+            <div class="flex items-center gap-4 text-xs font-mono text-hud-muted mb-4 uppercase tracking-widest">
+                <span>{format(entry.data.pubDate, 'MMMM d, yyyy')}</span>
+                <span class="text-hud-border">/</span>
+                <span class="text-hud-accent">{entry.data.classification || 'Log'}</span>
             </div>
             
-            <h1 class="text-3xl md:text-5xl font-bold uppercase tracking-tight text-white mb-6 leading-tight">
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-hud-text mb-6 leading-tight">
                 {entry.data.title}
             </h1>
 
             <div class="flex flex-wrap gap-2 mb-6">
                 {entry.data.tags.map(tag => (
-                    <span class="px-2 py-1 bg-hud-border/30 text-[10px] uppercase tracking-widest text-hud-muted">
-                        #{tag}
+                    <span class="px-2 py-1 bg-hud-gray/50 text-[10px] uppercase tracking-widest text-hud-muted rounded-sm">
+                        {tag}
                     </span>
                 ))}
             </div>
         </header>
 
         <!-- Content Body (Prose) -->
-        <div class="prose prose-invert prose-hud max-w-none">
+        <div class="prose prose-hud max-w-none">
             <Content />
         </div>
 
         <!-- Action Module -->
-        <div class="mt-16 bg-hud-gray/30 p-6 border border-hud-border">
-            <h3 class="text-sm font-mono text-hud-muted uppercase tracking-widest mb-4">/// END_OF_TRANSMISSION ///</h3>
-            <p class="text-sm text-hud-text mb-4">Log entry closed. Secure share options available below.</p>
+        <div class="mt-16 pt-8 border-t border-hud-border/30">
             <ShareControl title={entry.data.title} url={shareUrl} />
         </div>
     </article>
 </Layout>
-
-<style is:global>
-    /* Custom Prose Overrides for HUD feel */
-    .prose-hud {
-        --tw-prose-body: #EEEEEE;
-        --tw-prose-headings: #FFFFFF;
-        --tw-prose-links: #00FFFF;
-        --tw-prose-bold: #FFFFFF;
-        --tw-prose-counters: #00FFFF;
-        --tw-prose-bullets: #333333;
-        --tw-prose-hr: #333333;
-        --tw-prose-quotes: #00FFFF;
-    }
-    .prose-hud p {
-        margin-bottom: 2em;
-        line-height: 1.8;
-    }
-    .prose-hud strong {
-        font-weight: 600;
-        color: #fff;
-    }
-    .prose-hud blockquote {
-        border-left-color: #00FFFF;
-        background: rgba(0, 255, 255, 0.05);
-        padding: 1rem;
-        font-style: italic;
-    }
-    .prose-hud h2 {
-        font-family: 'Inter', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-size: 1.5rem;
-        border-bottom: 1px solid #333;
-        padding-bottom: 0.5rem;
-        margin-top: 3rem;
-    }
-    .prose-hud ul > li::marker {
-        content: ">> ";
-        color: #00FFFF;
-        font-family: monospace;
-    }
-</style>

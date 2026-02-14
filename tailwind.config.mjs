@@ -5,15 +5,15 @@ export default {
         extend: {
             colors: {
                 hud: {
-                    black: '#050505',
-                    dark: '#0A0A0A',
-                    gray: '#111111',
-                    border: '#333333',
-                    text: '#EEEEEE',
-                    muted: '#888888',
-                    accent: '#00FFFF', // Cyan
-                    warning: '#FFAA00', // Orange
-                    success: '#00FF00', // Green
+                    black: '#F0F2F5', // Layout Background (Cool Gray)
+                    dark: '#FFFFFF',  // Component Background (White)
+                    gray: '#E4E7EB',  // Hover states
+                    border: '#D1D9E0', // Borders (High contrast)
+                    text: '#1C2127',   // Primary Text (Ink)
+                    muted: '#5F6B7C',  // Secondary Text
+                    accent: '#0052CC', // Technical Blue
+                    warning: '#B46602', // Dark Orange
+                    success: '#037f4c', // Dark Green
                 }
             },
             fontFamily: {
@@ -25,5 +25,7 @@ export default {
             }
         },
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/typography'),
+    ],
 }

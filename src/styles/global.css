@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,25 +6,77 @@
 
 @layer base {
   body {
-    @apply bg-zinc-950 text-zinc-100 font-sans antialiased;
+    @apply bg-hud-black text-hud-text font-sans antialiased;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-medium tracking-tight;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium tracking-tight text-hud-text;
   }
 }
 
-/* Custom Scrollbar for the HUD feel */
+/* Custom Scrollbar (Light Mode) */
 ::-webkit-scrollbar {
-  width: 6px;
-  background: #050505;
+  width: 8px;
+  background: #F0F2F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #C1C7D0;
   border-radius: 0px;
+  border: 2px solid #F0F2F5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #A0AAB8;
+}
+
+/* Prose HUD Overrides (Light Mode) */
+.prose-hud {
+  --tw-prose-body: #1C2127;
+  --tw-prose-headings: #1C2127;
+  --tw-prose-links: #0052CC;
+  --tw-prose-bold: #1C2127;
+  --tw-prose-counters: #0052CC;
+  --tw-prose-bullets: #D1D9E0;
+  --tw-prose-hr: #E4E7EB;
+  --tw-prose-quotes: #0052CC;
+}
+
+.prose-hud p {
+  margin-bottom: 2em;
+  line-height: 1.8;
+}
+
+.prose-hud strong {
+  font-weight: 600;
+}
+
+.prose-hud blockquote {
+  border-left-color: #0052CC;
+  background: rgba(0, 82, 204, 0.05);
+  padding: 1rem;
+  font-style: italic;
+  color: #42526E;
+}
+
+.prose-hud h2 {
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #E4E7EB;
+  padding-bottom: 0.5rem;
+  margin-top: 3rem;
+}
+
+.prose-hud ul>li::marker {
+  content: ">> ";
+  color: #0052CC;
+  font-family: monospace;
+  font-weight: bold;
 }

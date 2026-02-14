@@ -1,0 +1,105 @@
+w---
+import Layout from '../layouts/Layout.astro';
+import { Flag, Activity, FlaskConical } from 'lucide-react';
+import KartingChart from '../components/KartingChart';
+
+import kartingData from '../data/karting.json';
+
+// Calculate Karting Stats
+const totalLaps = kartingData.reduce((acc, curr) => acc + curr.laps, 0);
+// Assuming average lap is roughly 1 minute (based on data ~60s) for simple calc, or just show laps
+const totalTrackHours = Math.floor((totalLaps * 1) / 60); // Approx hours if 1 min avg
+
+const hobbies = [
+  {
+    title: "Karting",
+    icon: Flag,
+    subtitle: "Telemetry & Apex Analysis",
+    description: "Precision driving and mechanical engineering. Analyzing telemetry data to optimize lap times and chassis setup.",
+    stats: [
+      { label: "Class", value: "Rotax Max" },
+      { label: "Total Laps", value: totalLaps.toString() },
+      { label: "Track Time", value: `${totalTrackHours}+ hrs` }
+    ],
+    color: "text-hud-warning"
+  },
+  {
+    title: "Defense Journalism",
+    icon: Activity,
+    subtitle: "Military Technology Analysis",
+    description: "Analyzing global defense systems, procurement strategies, and geopolitical implications through open-source intelligence.",
+    link: { text: "reachdefence.com", url: "https://reachdefence.com" },
+    stats: [
+      { label: "Focus", value: "MilTech" },
+      { label: "Articles", value: "15+" },
+      { label: "Status", value: "Active" }
+    ],
+    color: "text-hud-success"
+  }
+];
+---
+
+<Layout title="Hobbies & Interests">
+    <div class="mb-16 pt-8 pb-8 border-b border-hud-border">
+        <h1 class="text-4xl md:text-6xl font-black font-mono uppercase tracking-tighter text-hud-text mb-6">
+            STUFF I DO
+        </h1>
+        <p class="text-hud-text text-lg max-w-2xl leading-relaxed">
+            Secondary operational domains and areas of deep-dive research.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8">
+        {hobbies.map((hobby) => (
+            <div class="group relative bg-hud-black border border-hud-border hover:border-hud-text transition-colors duration-300 p-8 overflow-hidden">
+                <!-- Background Decoration -->
+                <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                    <hobby.icon size={120} />
+                </div>
+
+                <!-- Header -->
+                <div class="relative z-10 flex items-start justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-hud-text mb-1 flex items-center gap-3">
+                            {hobby.title}
+                            {hobby.link && (
+                                <a href={hobby.link.url} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-hud-accent border border-hud-accent/50 px-2 py-0.5 rounded-full hover:bg-hud-accent/10 transition-colors no-underline">
+                                    {hobby.link.text} ↗
+                                </a>
+                            )}
+                        </h2>
+                        <span class={`font-mono text-xs uppercase tracking-widest ${hobby.color}`}>
+                            {hobby.subtitle}
+                        </span>
+                    </div>
+                    <hobby.icon size={32} class="text-hud-muted group-hover:text-hud-text transition-colors" />
+                </div>
+
+                <!-- Content -->
+                <p class="relative z-10 text-hud-text/80 text-sm leading-relaxed mb-8 max-w-xl">
+                    {hobby.description}
+                </p>
+
+                <!-- Stats Grid -->
+                <div class="relative z-10 grid grid-cols-3 gap-4 border-t border-hud-border/50 pt-6">
+                    {hobby.stats.map(stat => (
+                        <div>
+                            <span class="block text-[10px] font-mono uppercase tracking-widest text-hud-muted mb-1">
+                                {stat.label}
+                            </span>
+                            <span class="block text-lg font-bold text-hud-text">
+                                {stat.value}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+
+                {hobby.title === 'Karting' && (
+                    <div class="relative z-10 mt-8">
+                        <KartingChart client:visible />
+                    </div>
+                )}
+            </div>
+        ))}
+    </div>
+</Layout>
