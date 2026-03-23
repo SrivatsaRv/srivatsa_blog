@@ -1,4 +1,4 @@
-w---
+---
 import Layout from '../layouts/Layout.astro';
 import { Flag, Activity, FlaskConical } from 'lucide-react';
 import KartingChart from '../components/KartingChart';
@@ -6,20 +6,20 @@ import KartingChart from '../components/KartingChart';
 import kartingData from '../data/karting.json';
 
 // Calculate Karting Stats
-const totalLaps = kartingData.reduce((acc, curr) => acc + curr.laps, 0);
-// Assuming average lap is roughly 1 minute (based on data ~60s) for simple calc, or just show laps
-const totalTrackHours = Math.floor((totalLaps * 1) / 60); // Approx hours if 1 min avg
+const totalLaps = kartingData.reduce((acc: number, curr: any) => acc + curr.laps.length, 0);
+const totalSessions = kartingData.length;
+const wins = kartingData.filter((s: any) => s.position === 1).length;
 
 const hobbies = [
   {
     title: "Karting",
     icon: Flag,
     subtitle: "Telemetry & Apex Analysis",
-    description: "Precision driving and mechanical engineering. Analyzing telemetry data to optimize lap times and chassis setup.",
+    description: "Tracking lap times, consistency scores, and racing lines across sessions at Pune Kartdrome. Chasing sub-minute laps on SX200s.",
     stats: [
-      { label: "Class", value: "Rotax Max" },
+      { label: "Sessions", value: totalSessions.toString() },
       { label: "Total Laps", value: totalLaps.toString() },
-      { label: "Track Time", value: `${totalTrackHours}+ hrs` }
+      { label: "Wins", value: wins.toString() }
     ],
     color: "text-hud-warning"
   },

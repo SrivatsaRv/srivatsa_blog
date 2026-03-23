@@ -1,65 +1,62 @@
 [
     {
-        "date": "2024-01-15",
-        "track": "Pune Kartdome",
-        "bestLap": 62.5,
-        "laps": 12,
-        "conditions": "Cold track"
+        "session": 94,
+        "date": "2026-03-21",
+        "time": "15:57",
+        "track": "Pune Kartdrome",
+        "kartType": "SX200",
+        "kartNumber": 13,
+        "position": 1,
+        "totalDrivers": 4,
+        "lapAvg": "1:01.666",
+        "bestLap": "1:00.995",
+        "consistency": 0.671,
+        "laps": ["1:37.539", "1:02.169", "1:01.986", "1:02.207", "1:01.529", "1:00.995", "1:01.079", "1:01.702"],
+        "notes": "Daily best time — P1 finish"
     },
     {
-        "date": "2024-02-20",
-        "track": "Pune Kartdome",
-        "bestLap": 61.8,
-        "laps": 15,
-        "conditions": "New tires"
+        "session": 98,
+        "date": "2026-03-21",
+        "time": "16:16",
+        "track": "Pune Kartdrome",
+        "kartType": "SX200",
+        "kartNumber": 13,
+        "position": 2,
+        "totalDrivers": 4,
+        "lapAvg": "1:01.518",
+        "bestLap": "1:00.118",
+        "consistency": 1.400,
+        "laps": ["1:04.299", "1:01.185", "1:00.260", "1:00.118", "1:04.774", "1:02.993", "1:00.630", "1:00.478", "1:01.747", "1:01.477"],
+        "notes": "Faster best lap than session 94, less consistent"
     },
     {
-        "date": "2024-03-10",
-        "track": "Pune Kartdome",
-        "bestLap": 61.2,
-        "laps": 18,
-        "conditions": "Personal Best"
+        "session": 100,
+        "date": "2026-03-19",
+        "time": "16:42",
+        "track": "Pune Kartdrome",
+        "kartType": "SX200",
+        "kartNumber": 19,
+        "position": 1,
+        "totalDrivers": 3,
+        "lapAvg": "1:03.859",
+        "bestLap": "1:02.726",
+        "consistency": 1.333,
+        "laps": ["1:05.894", "1:06.794", "1:03.454", "1:03.201", "1:04.423", "1:02.938", "1:03.440", "1:02.726", "1:03.899"],
+        "notes": "P1 finish, daily best on SX200"
     },
     {
-        "date": "2024-04-05",
-        "track": "Pune Kartdome",
-        "bestLap": 60.9,
-        "laps": 20,
-        "conditions": "Consistent pace"
-    },
-    {
-        "date": "2024-05-12",
-        "track": "Pune Kartdome",
-        "bestLap": 60.5,
-        "laps": 22,
-        "conditions": "Perfect conditions"
-    },
-    {
-        "date": "2024-06-25",
-        "track": "Pune Kartdome",
-        "bestLap": 59.8,
-        "laps": 25,
-        "conditions": "Sub-60 barrier broken"
-    },
-    {
-        "date": "2024-08-14",
-        "track": "Pune Kartdome",
-        "bestLap": 59.2,
-        "laps": 18,
-        "conditions": "Aggressive setup"
-    },
-    {
-        "date": "2024-10-02",
-        "track": "Pune Kartdome",
-        "bestLap": 58.9,
-        "laps": 30,
-        "conditions": "Optimal line found"
-    },
-    {
-        "date": "2024-12-15",
-        "track": "Pune Kartdome",
-        "bestLap": 58.4,
-        "laps": 25,
-        "conditions": "Current Track Record"
+        "session": 102,
+        "date": "2026-03-19",
+        "time": "17:16",
+        "track": "Pune Kartdrome",
+        "kartType": "SX200",
+        "kartNumber": 14,
+        "position": 2,
+        "totalDrivers": 7,
+        "lapAvg": "1:05.359",
+        "bestLap": "1:04.515",
+        "consistency": 0.844,
+        "laps": ["1:10.489", "1:05.805", "1:05.473", "1:04.782", "1:04.515", "1:06.825", "1:04.741", "1:05.374"],
+        "notes": "Larger grid, different kart #14"
     }
 ]
